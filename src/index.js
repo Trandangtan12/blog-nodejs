@@ -3,6 +3,7 @@ const app = express();
 const { engine } = require('express-handlebars');
 const morgan = require('morgan');
 const path = require('path');
+const methodOverride = require('method-override');
 const port = 3000;
 
 const route = require('./routes');
@@ -23,11 +24,17 @@ app.use(express.json());
 // HTTP Logger
 app.use(morgan('combined'));
 
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
+
 // Teamplate handle engine
 app.engine(
     'hbs',
     engine({
         extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b,
+        },
     }),
 );
 app.set('view engine', 'hbs');

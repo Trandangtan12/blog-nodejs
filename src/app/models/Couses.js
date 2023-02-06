@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const slug = require('mongoose-slug-generator');
 
-const Course = new Schema({
-    _id: { type: String },
-    name: { type: String, maxLeight: 255 },
-    description: { type: String, maxLeight: 600 },
-    image: { type: String, maxLeight: 255 },
-    createAt: { type: Date, default: Date.now },
-    updateAt: { type: Date, default: Date.now },
-});
+mongoose.plugin(slug);
+
+const Course = new Schema(
+    {
+        name: { type: String, maxLeight: 255, require: true },
+        description: { type: String, maxLeight: 600, require: true },
+        image: { type: String, maxLeight: 255 },
+        slug: { type: String, slug: 'name', unique: true },
+    },
+    {
+        timestamps: true,
+    },
+);
 
 module.exports = mongoose.model('Course', Course);
