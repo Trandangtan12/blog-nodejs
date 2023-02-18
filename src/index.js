@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const port = 3000;
 
 const route = require('./routes');
+const SortMiddleware = require('./app/middlewares/SortMiddleware');
 const db = require('./config/db');
 
 //Connect to db
@@ -34,11 +35,30 @@ app.engine(
         extname: '.hbs',
         helpers: {
             sum: (a, b) => a + b,
+            sorttable: (field, sort) => {
+                const sortType = field === sort.column ? sort.type : 'default';
+                const icons = {
+                    default: 'sort',
+                    asc: 'up',
+                    desc: 'dowm',
+                };
+                const types = {
+                    default: 'desc',
+                    asc: 'desc',
+                    desc: 'asc',
+                };
+                const icon = icons[sortType];
+                const type = types[sortType];
+                return `<a href="?_sort&column=${field}&type=${type}">${icon}</a>`;
+            },
         },
     }),
 );
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
+
+// Custom middleware
+app.use(SortMiddleware);
 
 route(app);
 

@@ -1,7 +1,7 @@
 const Course = require('../models/Couses');
 const { mongooseToObject } = require('../../utils/mongoose');
 
-class MeController {
+class CourseController {
     // [GET] /courses/:slug
     show(req, res, next) {
         Course.findOne({ slug: req.params.slug })
@@ -81,4 +81,4 @@ class MeController {
     }
 }
 
-module.exports = new MeController();
+module.exports = new CourseController();

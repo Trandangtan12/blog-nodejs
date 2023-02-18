@@ -21,9 +21,11 @@
       <tr>
         <th scope="col"></th>
         <th scope="col">#</th>
-        <th scope="col">Tên khoá học <i class="bi bi-arrow-down-up"></i></th>
+        <th scope="col">Tên khoá học
+          {{{sorttable 'name' _sort}}}
+        </th>
         <th scope="col">Chi tiết</th>
-        <th scope="col">Thời gian tạo</th>
+        <th scope="col">Thời gian tạo {{{sorttable 'createdAt' _sort}}}</th>
         <th scope="col">Hành động</th>
       </tr>
     </thead>
